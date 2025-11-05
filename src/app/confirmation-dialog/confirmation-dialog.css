@@ -1,0 +1,124 @@
+/**
+ * :host стили для полноэкранного позиционирования диалога.
+ */
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/**
+ * Фон (backdrop) с эффектом размытия.
+ */
+.dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(1, 4, 28, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+/**
+ * Основной контейнер диалога в стиле Glassmorphism.
+ */
+.dialog-container {
+  position: relative;
+  z-index: 1001;
+  width: clamp(300px, 90vw, 450px);
+  padding: 2rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  text-align: center;
+  color: #E0E0E0;
+  animation: slideInUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+/**
+ * Заголовок/сообщение диалога.
+ */
+.dialog-message {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+/**
+ * Контейнер для кнопок действий.
+ */
+.dialog-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/**
+ * Общие стили для кнопок в диалоге.
+ */
+.btn {
+  flex-grow: 1;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+/**
+ * Стили для кнопки подтверждения (опасное действие).
+ */
+.btn.confirm {
+  background-color: #FF3D3D;
+  color: #fff;
+  border-color: #FF3D3D;
+  box-shadow: 0 0 5px #FF3D3D, 0 0 10px #FF3D3D, 0 0 15px #FF3D3D;
+}
+
+.btn.confirm:hover {
+  background-color: #ff5757;
+  box-shadow: 0 0 8px #ff5757, 0 0 16px #ff5757, 0 0 24px #ff5757;
+  transform: translateY(-2px);
+}
+
+/**
+ * Стили для кнопки отмены.
+ */
+.btn.cancel {
+  background-color: transparent;
+  color: #E0E0E0;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn.cancel:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/**
+ * Анимации.
+ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

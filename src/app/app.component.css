@@ -1,0 +1,42 @@
+/* 
+  Стили для главного контейнера и заголовков в "Неоновом стиле".
+*/
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 3rem; /* Пространство между формой и списком */
+  min-height: 100vh;
+}
+
+.form-section-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.main-title {
+  font-size: 3rem; /* Крупный, заметный заголовок */
+  font-weight: 700;
+  color: var(--color-text-primary);
+  
+  /* --- НЕОНОВОЕ СВЕЧЕНИЕ --- */
+  text-shadow: 
+    0 0 5px var(--color-accent-glow),
+    0 0 10px var(--color-accent-glow),
+    0 0 20px var(--color-accent-neon), /* Более яркое свечение */
+    0 0 40px var(--color-bg-dark);
+    
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.main-subtitle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}

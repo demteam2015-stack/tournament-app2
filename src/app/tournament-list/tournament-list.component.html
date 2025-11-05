@@ -1,0 +1,49 @@
+<div class="container">
+  <!-- Заголовок страницы -->
+  <h1 class="main-title">Календарь Турниров</h1>
+
+  <!-- Кнопка для создания нового турнира -->
+  <div class="header-controls">
+    <a routerLink="/new" class="btn btn-primary">Создать Турнир</a>
+  </div>
+
+  <!-- Сетка для отображения карточек турниров -->
+  <div class="tournament-grid">
+    @for (tournament of tournaments(); track tournament.id) {
+      <div class="tournament-card">
+        <!-- Контейнер для афиши (постера) -->
+        <div class="poster-container">
+          <img [src]="tournament.posterImage || 'assets/images/default-poster.webp'" 
+               alt="Афиша турнира {{ tournament.name }}" 
+               class="poster-image"/>
+          <div class="poster-overlay"></div>
+        </div>
+
+        <!-- Основное содержимое карточки -->
+        <div class="card-content">
+          <h3 class="tournament-title">{{ tournament.name }}</h3>
+          <p class="tournament-date">{{ tournament.startDate | date: 'd MMMM yyyy' }}</p>
+          <p class="tournament-description">{{ tournament.description }}</p>
+
+          <!-- Кнопки действий -->
+          <div class="card-actions">
+            <a [routerLink]="['/edit', tournament.id]" class="btn btn-action btn-edit">Изменить</a>
+            <button (click)="requestDeleteTournament(tournament.id, tournament.name)" class="btn btn-action btn-delete">Удалить</button>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <!-- Сообщение, если турниров нет -->
+      <p>Пока нет ни одного турнира. Создайте первый!</p>
+    }
+  </div>
+</div>
+
+<!-- Модальное окно подтверждения удаления -->
+@if (tournamentToDelete()) {
+  <app-confirmation-dialog 
+    [message]="'Вы уверены, что хотите удалить турнир \'' + tournamentToDelete()!.name + '\'?'"
+    (confirm)="handleConfirmDelete()"
+    (cancel)="handleCancelDelete()">
+  </app-confirmation-dialog>
+}

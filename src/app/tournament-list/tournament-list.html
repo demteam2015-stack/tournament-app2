@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title">Календарь турниров</h1>
+    <a routerLink="/new" class="btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+      </svg>
+      <span>Создать</span>
+    </a>
+  </div>
+
+  @if (tournaments().length > 0) {
+    <div class="tournament-grid">
+      @for (tournament of tournaments(); track tournament.id) {
+        <div class="tournament-card">
+          <a [routerLink]="['/edit', tournament.id]" class="card-link-wrapper">
+            <div class="card-image-container">
+              @if (tournament.posterUrl) {
+                <img class="card-image" [src]="tournament.posterUrl" alt="Афиша {{tournament.name}}">
+              } @else {
+                <div class="card-image placeholder-image"></div>
+              }
+            </div>
+
+            <div class="card-content">
+              <h3 class="tournament-name">{{ tournament.name }}</h3>
+
+              <div class="tournament-details">
+                <div class="detail-item">
+                  <img [src]="disciplineIcons[tournament.discipline]" alt="" class="detail-icon">
+                  <span>{{ tournament.discipline }}</span>
+                </div>
+                <div class="detail-item">
+                  <svg class="detail-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zM8 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg>
+                  <span>{{ tournament.maxParticipants }}</span>
+                </div>
+                <div class="detail-item">
+                  <svg class="detail-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4.684 11.523v-2.3h2.3v2.3h-2.3zm-3.3-2.3v-2.3h2.3v2.3h-2.3zm6.6 0v-2.3h2.3v2.3h-2.3zm-3.3 4.6v-2.3h2.3v2.3h-2.3zm-3.3 0v-2.3h2.3v2.3h-2.3zm6.6 0v-2.3h2.3v2.3h-2.3zM1.384 1.323v2.3h2.3v-2.3h-2.3zm3.3 0v2.3h2.3v-2.3h-2.3zM8.384.023v2.3h2.3v-2.3h-2.3zm3.3 0v2.3h2.3v-2.3h-2.3zm-6.6 4.6v-2.3h2.3v2.3h-2.3zM15.084.023v2.3h-2.3v-2.3h2.3zM1.384 13.823h2.3v-2.3h-2.3v2.3zm3.3 0h2.3v-2.3h-2.3v2.3zm3.3 0h2.3v-2.3h-2.3v2.3z"/></svg>
+                  <span>{{ tournament.startDate | date: 'dd MMM yyyy'}}</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <div class="card-actions">
+            <a [routerLink]="['/edit', tournament.id]" class="action-btn edit" title="Редактировать">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>
+            </a>
+            <button class="action-btn delete" (click)="requestDeleteTournament(tournament.id, tournament.name)" title="Удалить">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="glass-card empty-state">
+      <div class="empty-state-icon">ð¥‹</div>
+      <p>Пока нет ни одного турнира.</p>
+      <a routerLink="/new" class="btn">Начните с создания первого</a>
+    </div>
+  }
+</div>
+
+<!-- Модальное окно подтверждения -->
+@if (tournamentToDelete(); as tournament) {
+  <app-confirmation-dialog 
+    [message]="'Вы уверены, что хотите удалить турнир \'' + tournament.name + '\'? Это действие необратимо.'" 
+    (confirm)="handleConfirmDelete()"
+    (cancel)="handleCancelDelete()">
+  </app-confirmation-dialog>
+}

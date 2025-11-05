@@ -1,0 +1,29 @@
+<div class="upload-container">
+
+  @if (previewUrl()) {
+    <!-- Секция предпросмотра, когда изображение выбрано -->
+    <div class="preview-container">
+      <img [src]="previewUrl()" alt="Предпросмотр афиши" class="preview-image">
+      <button (click)="clearFile($event)" class="remove-btn" title="Удалить изображение">
+        &times; <!-- Простой крестик в качестве иконки -->
+      </button>
+    </div>
+  } @else {
+    <!-- Зона для перетаскивания (drop zone) -->
+    <div 
+      class="drop-zone" 
+      [class.is-active]="isDragOver()"
+      (dragover)="onDragOver($event)" 
+      (dragleave)="onDragLeave($event)" 
+      (drop)="onDrop($event)"
+      (click)="fileInput.click()" 
+    >
+      <input type="file" #fileInput class="file-input" (change)="onFileSelected($event)" accept="image/*">
+      
+      <div class="icon">&#x21E9;</div> <!-- Иконка загрузки -->
+      <div class="text">Перетащите файл или <b>кликните для выбора</b></div>
+      <div class="subtext">PNG, JPG, WEBP до 5MB</div>
+    </div>
+  }
+
+</div>

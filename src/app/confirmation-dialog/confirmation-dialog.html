@@ -1,0 +1,9 @@
+<div class="dialog-backdrop" (click)="onBackdropClick($event)">
+  <div class="dialog-container">
+    <p class="dialog-message">{{ message() }}</p>
+    <div class="dialog-actions">
+      <button class="btn cancel" (click)="onCancel()">Отмена</button>
+      <button class="btn confirm" (click)="onConfirm()">Удалить</button>
+    </div>
+  </div>
+</div>

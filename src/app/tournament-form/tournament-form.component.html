@@ -1,0 +1,58 @@
+<div class="form-container">
+  <h2 class="form-title">{{ isEditMode() ? 'Редактировать' : 'Создать' }} Турнир</h2>
+
+  <form [formGroup]="tournamentForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Поле: Название турнира -->
+    <div class="form-group">
+      <label for="name" class="form-label">Название турнира</label>
+      <input id="name" type="text" formControlName="name" class="form-control">
+    </div>
+
+    <!-- Поле: Дисциплина -->
+    <div class="form-group">
+      <label for="discipline" class="form-label">Дисциплина</label>
+      <select id="discipline" formControlName="discipline" class="form-control">
+        @for (discipline of disciplines; track discipline) {
+          <option [value]="discipline">{{ discipline }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Поле: Количество участников -->
+    <div class="form-group">
+      <label for="maxParticipants" class="form-label">Участники (макс.)</label>
+      <input id="maxParticipants" type="number" formControlName="maxParticipants" class="form-control">
+    </div>
+
+    <!-- Поле: Дата начала -->
+    <div class="form-group">
+      <label for="startDate" class="form-label">Дата начала</label>
+      <input id="startDate" type="date" formControlName="startDate" class="form-control">
+    </div>
+    
+    <!-- Поле: Описание -->
+    <div class="form-group">
+      <label for="description" class="form-label">Краткое описание</label>
+      <textarea id="description" formControlName="description" class="form-control"></textarea>
+    </div>
+
+    <!-- Компонент загрузки афиши -->
+    <div class="form-group">
+        <label class="form-label">Афиша турнира</label>
+        <app-file-upload 
+          [initialUrl]="tournamentForm.get('posterImage')?.value"
+          (fileChanged)="onPosterChanged($event)">
+        </app-file-upload>
+    </div>
+
+    <!-- Кнопки действий -->
+    <div class="form-actions">
+      <a routerLink="/" class="btn btn-secondary">Отмена</a>
+      <button type="submit" [disabled]="tournamentForm.invalid" class="btn btn-primary">
+        {{ isEditMode() ? 'Сохранить изменения' : 'Создать турнир' }}
+      </button>
+    </div>
+
+  </form>
+</div>
